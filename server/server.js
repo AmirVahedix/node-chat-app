@@ -13,6 +13,17 @@ let io = socketIO(server)
 io.on('connection', (socket) => {
     console.log('new User Connected!')
 
+    socket.emit('newEmail', {
+        from: "amirvahedix@gmail.com",
+        to: "nobody@gmail.com",
+        body: "a handsome body for my email",
+        created_at: new Date()
+    })
+
+    socket.on('responseEmail', (email) => {
+        console.log(email)
+    })
+
     socket.on('disonnect', () => {
         console.log('user was disconnected.')
     })
