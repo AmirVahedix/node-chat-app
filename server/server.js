@@ -11,7 +11,6 @@ let server = http.createServer(app)
 let io = socketIO(server)
 
 
-
 io.on('connection', (socket) => {
     console.log('new User Connected!')
     
@@ -33,9 +32,6 @@ io.on('connection', (socket) => {
 })
 
 app.use(express.static(public_path))
-
-
-
 
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}...`)
