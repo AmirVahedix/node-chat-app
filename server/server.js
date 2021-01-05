@@ -10,19 +10,22 @@ let app = express()
 let server = http.createServer(app)
 let io = socketIO(server)
 
+
+
 io.on('connection', (socket) => {
     console.log('new User Connected!')
-
-    socket.emit('newEmail', {
-        from: "amirvahedix@gmail.com",
-        to: "nobody@gmail.com",
-        body: "a handsome body for my email",
-        created_at: new Date()
+    
+    
+    socket.emit('new_message', {
+        from: 'Admin',
+        body: 'welcome to our app!'
     })
 
-    socket.on('responseEmail', (email) => {
-        console.log(email)
+    socket.broadcast.emit('new_message', {
+        from: 'Admin',
+        body: 'new user joined'
     })
+
 
     socket.on('disonnect', () => {
         console.log('user was disconnected.')
