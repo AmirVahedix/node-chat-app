@@ -1,0 +1,17 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "description": "a simple chat app with node js",
+  "main": "app.js",
+  "scripts": {
+    "server": "nodemon server/server"
+  },
+  "engines": {
+    "node": "14.15.3"
+  },
+  "author": "amirvahedix",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
