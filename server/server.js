@@ -2,6 +2,7 @@ const path = require('path')
 const express = require('express')
 const socketIO = require('socket.io')
 const http = require('http')
+let {generateMessage} = require('./utlis/utlis')
 
 const public_path = path.join(__dirname, '../public')
 const PORT = process.env.PORT || 3000
@@ -15,16 +16,9 @@ io.on('connection', (socket) => {
     console.log('new User Connected!')
     
     
-    socket.emit('new_message', {
-        from: 'Admin',
-        body: 'welcome to our app!'
-    })
+    socket.emit('new_message', generateMessage('Admin', 'Welcome to our chat app!'))
 
-    socket.broadcast.emit('new_message', {
-        from: 'Admin',
-        body: 'new user joined'
-    })
-
+    socket.broadcast.emit('new_message', generateMessage('Admin', 'New user joined to the chat.'))
 
     socket.on('disonnect', () => {
         console.log('user was disconnected.')
