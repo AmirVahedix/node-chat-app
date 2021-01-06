@@ -15,10 +15,15 @@ let io = socketIO(server)
 io.on('connection', (socket) => {
     console.log('new User Connected!')
     
-    
     socket.emit('new_message', generateMessage('Admin', 'Welcome to our chat app!'))
 
     socket.broadcast.emit('new_message', generateMessage('Admin', 'New user joined to the chat.'))
+
+    socket.on('create_message', (message) => {
+        // io.emit('new_message', generateMessage('Admin', 'Welcome to our chat app!'))
+        io.emit('new_message', generateMessage(message.from, message.body))
+        // console.log(message.from, message.body)
+    })
 
     socket.on('disonnect', () => {
         console.log('user was disconnected.')
