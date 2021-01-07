@@ -5,13 +5,15 @@ socket.on('connect', () => {
 })
 
 socket.on('new_message', (message) => {
-
     let formatedTime = moment(message.created_at).format('hh mm a')
+    let template = jQuery('#message-template').html()
+    let html = Mustache.render(template, {
+        from: message.from,
+        body: message.body,
+        formatedTime: formatedTime
+    })
 
-    let li = jQuery(`<li>${message.body}</li>`)
-    let span = jQuery(`<span><i>${message.from}</i> at <span>${formatedTime}<span></span>`)
-    li.prepend(span)
-    jQuery('#messages').append(li)
+    jQuery('#messages').append(html)
 })
 
 socket.on('disconnect', () => {
@@ -52,7 +54,12 @@ locationButton.on('click', () => {
 socket.on('create_locatoin_message', (location) => {
     let formatedTime = moment(location.created_at).format('hh mm a')
 
-    let li = jQuery(`<li><span><i>${location.from}</i> at ${formatedTime}</span> <br> <a href="${location.url}" target="_blank">My Current Location</a> </li>`)
+    let template = jQuery('#location-message-template').html()
+    let html = Mustache.render(template, {
+        from: location.from,
+        url: location.url,
+        formatedTime: formatedTime
+    })
 
-    jQuery('#messages').append(li)
+    jQuery('#messages').append(html)
 })
