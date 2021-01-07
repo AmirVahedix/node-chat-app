@@ -5,10 +5,11 @@ socket.on('connect', () => {
 })
 
 socket.on('new_message', (message) => {
-    let li = jQuery('<li></li>')
-    li.text(`${message.body}`)
-    let span = jQuery('<span><span>')
-    span.text(`${message.from}`)
+
+    let formatedTime = moment(message.created_at).format('hh mm a')
+
+    let li = jQuery(`<li>${message.body}</li>`)
+    let span = jQuery(`<span><i>${message.from}</i> at <span>${formatedTime}<span></span>`)
     li.prepend(span)
     jQuery('#messages').append(li)
 })
@@ -19,10 +20,12 @@ socket.on('disconnect', () => {
 
 jQuery('#message-form').on('submit', function(e){
     e.preventDefault()
+    
     socket.emit('create_message', {
         from: 'User',
         body: jQuery('[name=message]').val()
     })
+
     jQuery('[name=message]').val("")
 })
 
@@ -47,10 +50,9 @@ locationButton.on('click', () => {
 })
 
 socket.on('create_locatoin_message', (location) => {
-    let li = jQuery('<li></li>')
-    let a = jQuery('<a target="_blank">My Current Location</a>')
-    li.text(`${location.from}: `)
-    a.attr('href', location.url)
-    li.append(a)
+    let formatedTime = moment(location.created_at).format('hh mm a')
+
+    let li = jQuery(`<li><span><i>${location.from}</i> at ${formatedTime}</span> <br> <a href="${location.url}" target="_blank">My Current Location</a> </li>`)
+
     jQuery('#messages').append(li)
 })

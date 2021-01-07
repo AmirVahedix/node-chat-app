@@ -8,6 +8,10 @@
     font-family: 'Mukta', sans-serif;
   }
 
+  a{
+    color: #FDFDFD
+  }
+
   ul, li {
     list-style-position: inside;
   }
