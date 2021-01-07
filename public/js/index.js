@@ -1,9 +1,28 @@
 let socket = io()
 
+let scrollDown = () => {
+    //Selector
+    let messages = jQuery('#messages')
+    let newMessage = messages.children('li:last-child')
+
+    //Height
+    let clientHeight = messages.prop('clientHeight')
+    let scrollTop = messages.prop('scrollTop')
+    let scrollHeight = messages.prop('scrollHeight')
+
+    let newMessageHeight = newMessage.innerHeight()
+    let lastMessageHeight = newMessage.prev().innerHeight()
+
+    if(clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight){
+        messages.scrollTop(scrollHeight)
+    }
+}
+
 socket.on('connect', () => {
     console.log('connected to server!')
 })
 
+// new Message
 socket.on('new_message', (message) => {
     let formatedTime = moment(message.created_at).format('hh mm a')
     let template = jQuery('#message-template').html()
@@ -14,6 +33,24 @@ socket.on('new_message', (message) => {
     })
 
     jQuery('#messages').append(html)
+
+    scrollDown()
+})
+
+// New Location Message
+socket.on('create_locatoin_message', (location) => {
+    let formatedTime = moment(location.created_at).format('hh mm a')
+
+    let template = jQuery('#location-message-template').html()
+    let html = Mustache.render(template, {
+        from: location.from,
+        url: location.url,
+        formatedTime: formatedTime
+    })
+
+    jQuery('#messages').append(html)
+    scrollDown()
+
 })
 
 socket.on('disconnect', () => {
@@ -51,15 +88,3 @@ locationButton.on('click', () => {
     })
 })
 
-socket.on('create_locatoin_message', (location) => {
-    let formatedTime = moment(location.created_at).format('hh mm a')
-
-    let template = jQuery('#location-message-template').html()
-    let html = Mustache.render(template, {
-        from: location.from,
-        url: location.url,
-        formatedTime: formatedTime
-    })
-
-    jQuery('#messages').append(html)
-})
