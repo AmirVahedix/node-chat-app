@@ -5,19 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat App</title>
     <link rel="shortcut icon" href="#" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta&display=swap" rel="stylesheet"> 
 </head>
-<body>
-    <h3>Chat app is active.</h3>
-    
-    <ol id="messages">
+<body class="chat">
 
-    </ol>
+    <div class="chat__sidebar">
+        <h3>People</h3>
+        <div id="users">
 
-    <form action="" id="message-form">
-        <input type="text" name="message" placeholder="Message...">
-        <button type="submit">send </button>
-        <button type="button" id="send-location">Send Location</button>
-    </form>
+        </div>
+    </div>
+
+    <div class="chat__main">
+
+        <ol id="messages" class="chat__messages"></ol>
+
+        <div class="chat__footer">
+            <form action="" id="message-form">
+                <input type="text" name="message" placeholder="Message..." value="" autocomplete="off">
+                <button type="submit">send</button>
+                <button type="button" id="send-location">Send Location</button>
+            </form>
+        </div>
+
+    </div>
+
     
     <script src="./js/libs/jquery.min.js" type="text/javascript"></script>
     <script src="/socket.io/socket.io.js"></script>

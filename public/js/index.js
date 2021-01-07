@@ -5,9 +5,11 @@ socket.on('connect', () => {
 })
 
 socket.on('new_message', (message) => {
-    console.log(message.body)
     let li = jQuery('<li></li>')
-    li.text(`${message.from}: ${message.body}`)
+    li.text(`${message.body}`)
+    let span = jQuery('<span><span>')
+    span.text(`${message.from}`)
+    li.prepend(span)
     jQuery('#messages').append(li)
 })
 
@@ -21,6 +23,7 @@ jQuery('#message-form').on('submit', function(e){
         from: 'User',
         body: jQuery('[name=message]').val()
     })
+    jQuery('[name=message]').val("")
 })
 
 let locationButton = jQuery('#send-location')
@@ -29,8 +32,10 @@ locationButton.on('click', () => {
     if(!navigator.geolocation){
         return alert('Location is not supported by your browser')
     }
+    locationButton.attr('disabled', 'disabled').text('Sending Location...')
 
     navigator.geolocation.getCurrentPosition((position) => {
+        locationButton.removeAttr('disabled').text('Send Location')
         socket.emit('location_message', {
             from: 'User',
             lat: position.coords.latitude,
