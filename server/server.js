@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
 
     socket.on('location_message', (coords) => {
         let user = users.getUser(socket.id)
-        if(user && isString(message.body)){
+        if(user){
             io.to(user.room).emit('create_locatoin_message', generateLocationMessage(coords.from, coords.lat, coords.long))
         }
     })
