@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta&display=swap" rel="stylesheet"> 
+</head>
+<body class="chat">
+
+    <div class="chat__sidebar">
+        <h3>People</h3>
+        <div id="users">
+
+        </div>
+    </div>
+
+    <div class="chat__main">
+
+        <ol id="messages" class="chat__messages"></ol>
+
+        <div class="chat__footer">
+            <form action="" id="message-form">
+                <input type="text" name="message" placeholder="Message..." value="" autocomplete="off">
+                <button type="submit">send</button>
+                <button type="button" id="send-location">Send Location</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script type="text/template" id="message-template">
+        <li>
+            <span>
+                <i>{{from}}</i>
+                at <span>{{formatedTime}}</span>
+            </span>
+            {{body}}
+        </li>
+    </script>
+
+    <script type="text/template" id="location-message-template">
+        <li>
+            <span>
+                <i>{{from}}</i>
+                at <span>{{formatedTime}}</span>
+            </span>
+            <a href="{{url}}" target="_blank">View My Location</a>   
+        </li>
+    </script>
+    
+    <script src="./js/libs/jquery.min.js" type="text/javascript"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./js/libs/moment.js"></script>
+    <script src="./js/libs/mustache.js"></script>
+    <script src="./js/libs/deparam.js"></script>
+    <script src="./js/chat.js"></script>
+</body>
+</html>

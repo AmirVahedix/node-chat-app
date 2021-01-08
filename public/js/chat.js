@@ -20,6 +20,16 @@ let scrollDown = () => {
 
 socket.on('connect', () => {
     console.log('connected to server!')
+    let params = jQuery.deparam(window.location.search)
+
+    socket.emit('join', params, (err) => {
+        if(err) {
+            alert(err)
+            window.location.href = '/'
+        }else{
+            console.log('OK!')
+        }
+    })
 })
 
 // new Message
@@ -59,10 +69,10 @@ socket.on('disconnect', () => {
 
 jQuery('#message-form').on('submit', function(e){
     e.preventDefault()
-    
+
     socket.emit('create_message', {
         from: 'User',
-        body: jQuery('[name=message]').val()
+        body: jQuery('[name=message]').val(),
     })
 
     jQuery('[name=message]').val("")
@@ -81,7 +91,7 @@ locationButton.on('click', () => {
         socket.emit('location_message', {
             from: 'User',
             lat: position.coords.latitude,
-            long: position.coords.longitude
+            long: position.coords.longitude,
         })
     }, () => {
         console.log('unable to fetch location')
