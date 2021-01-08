@@ -32,11 +32,17 @@ io.on('connection', (socket) => {
     })
 
     socket.on('create_message', (message) => {
-        io.emit('new_message', generateMessage(message.from, message.body))
+        let user = users.getUser(socket.id)
+        if(user && isString(message.body)){
+            io.to(user.room).emit('new_message', generateMessage(message.from, message.body))
+        }
     })
 
     socket.on('location_message', (coords) => {
-        io.emit('create_locatoin_message', generateLocationMessage(coords.from, coords.lat, coords.long))
+        let user = users.getUser(socket.id)
+        if(user && isString(message.body)){
+            io.to(user.room).emit('create_locatoin_message', generateLocationMessage(coords.from, coords.lat, coords.long))
+        }
     })
 
     socket.on('disconnect', () => { 

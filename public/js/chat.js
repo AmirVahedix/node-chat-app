@@ -69,9 +69,10 @@ socket.on('disconnect', () => {
 
 jQuery('#message-form').on('submit', function(e){
     e.preventDefault()
+    let params = jQuery.deparam(window.location.search)
 
     socket.emit('create_message', {
-        from: 'User',
+        from: params.name,
         body: jQuery('[name=message]').val(),
     })
 
@@ -88,8 +89,9 @@ locationButton.on('click', () => {
 
     navigator.geolocation.getCurrentPosition((position) => {
         locationButton.removeAttr('disabled').text('Send Location')
-        socket.emit('location_message', {
-            from: 'User',
+    let params = jQuery.deparam(window.location.search)
+            socket.emit('location_message', {
+            from: params.name,
             lat: position.coords.latitude,
             long: position.coords.longitude,
         })
