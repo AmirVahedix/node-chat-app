@@ -98,3 +98,10 @@ locationButton.on('click', () => {
     })
 })
 
+socket.on('updateUsersList', (users) => {
+    let ol = jQuery('<ol></ol>')
+    users.forEach((user) => {
+        ol.append(jQuery('<li></li>').text(user))
+    })
+    jQuery('#users').html(ol)
+})
